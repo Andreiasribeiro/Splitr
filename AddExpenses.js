@@ -6,6 +6,7 @@ import Intro from './Intro.js';
 export function AddExpenses({ user }) {
     const [greet, setGreet] = useState('');
     const [expense, setExpense] = useState('');
+    const [token, setToken] = useState("");
 
     const [amount, setAmount] = useState(0);
     const [description, setDescription] = useState('');
@@ -13,10 +14,10 @@ export function AddExpenses({ user }) {
 
     // data to be sent to the POST request
     //const data = {
-       // tripID: tripID,
-       // amount: amount,
-      //  description: description,
-   // }
+    // tripID: tripID,
+    // amount: amount,
+    //  description: description,
+    // }
 
     const findGreet = () => {
         const hours = new Date().getHours()
@@ -24,12 +25,30 @@ export function AddExpenses({ user }) {
         if (hours === 1 || hours < 17) return setGreet('Afternoon,');
         setGreet('Evening,');
     }
-
+    // to call findGreet
     useEffect(() => {
         //AsyncStorage.clear();
-
         findGreet();
     }, []);
+
+
+    //const myHeaders = new Headers();
+
+    //myHeaders.append('Content-Type', 'application/json');
+    //myHeaders.append('Authorization', token);
+
+    //return fetch('http://localhost:8080/' + trip + '/expense', {
+     //   method: 'POST',
+     //   headers: myHeaders,
+    //}).then((response) => response.text())
+    ///.then((text) => {
+    //    console.log(text);
+   //     setLogin(text);
+  //  }).catch((error) => {
+
+     //   console.log(error);
+    //    setExpense("error")
+    //});
 
     function AddExpense() {
         console.log("Calling API Expense");
@@ -37,7 +56,7 @@ export function AddExpenses({ user }) {
         fetch('http://localhost:8080/' + trip + '/expense', {
             method: "POST",
             body: JSON.stringify(data),
-            headers: { "Content-type": "application/json;charset=UTF-8" }
+            headers: { "Content-type": "application/json" }
         })
             .then((response) => response.text())
             .then((text) => {
@@ -62,7 +81,7 @@ export function AddExpenses({ user }) {
                 />
                 <TextInput
                     placeholder='Enter the tripID'
-                    style={styles.textInput2} />
+                    style={styles.textInput} />
 
                 <TextInput
                     placeholder='Enter the expense'
@@ -73,8 +92,8 @@ export function AddExpenses({ user }) {
                     style={styles.textInput} />
 
                 <TouchableOpacity
-                 value={expense}
-                 onChangeText={setExpense}
+                    value={expense}
+                    onChangeText={setExpense}
                     style={styles.loginButton}
                 >
                     <Text style={styles.textButton}>
@@ -97,11 +116,17 @@ export function AddExpenses({ user }) {
 };
 const width = Dimensions.get('window').width - 50;
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     header: {
         fontSize: 20,
         fontWeight: 'bold',
         color: '#1e1e1e',
+        paddingLeft: 25,
+        paddingTop: 20,
+
     },
     loginButton: {
         width: 300,
@@ -131,6 +156,7 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         fontSize: 25,
         marginBottom: 15,
+
     },
     textInput2: {
         borderWidth: 2,
@@ -139,7 +165,7 @@ const styles = StyleSheet.create({
         width,
         height: 50,
         borderRadius: 10,
-        paddingLeft: 15,
+        paddingLeft: 25,
         fontSize: 25,
         marginBottom: 15,
         marginTop: 15,

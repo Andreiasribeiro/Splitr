@@ -11,15 +11,19 @@ export default function Intro({ onFinish }) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [token, setToken] = useState("");
 
     const [login, setLogin] = useState("Your login here");
+    
 
-    const handleOnChangeText = text => {
-        setUsername(text);
-    }
+    // const handleOnChangeText = text => {
+    //   setUsername(text);
+    //}
 
+    //To store the user
+    // After save the user, check if there are onFinish function
     const handleSubmit = async () => {
-        const user = { username: username };
+        const user = { username: username, token: login};
         //JSON.stringify to change the value to string, because AsyncStorage olny accept string
         await AsyncStorage.setItem('user', JSON.stringify(user));
         if (onFinish) onFinish();
@@ -28,8 +32,6 @@ export default function Intro({ onFinish }) {
 
     function apiCall() {
 
-        const myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');
 
         console.log("Calling API");
         if (username && password) {
@@ -37,18 +39,19 @@ export default function Intro({ onFinish }) {
 
                 .then((response) => response.text())// convert to text
                 .then((text) => {
-                    if (text == !username || !password) {
+                    if (text == !username && !password) {
                         alert("username or password invalid")
                     } else {
                         console.log(text);
                         setLogin(text);
+                       
                     }
                 })
         }
-        
+
     }
 
-    <div onclick="Custom ()"> On Click</div>
+   //Press the button "Authentication" and then "Submit" to sent the token
 
     return (
         <>
@@ -62,7 +65,7 @@ export default function Intro({ onFinish }) {
                 />
                 <TextInput
                     value={username}
-                    onChangeText={handleOnChangeText}
+                    onChangeText={setUsername}
                     placeholder='Enter your username'
                     style={styles.textInput} />
 
@@ -106,8 +109,6 @@ export default function Intro({ onFinish }) {
                         Mult Click
                         </Text>
                 </TouchableOpacity>
-
-
 
 
             </View>

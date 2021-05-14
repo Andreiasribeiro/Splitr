@@ -10,6 +10,8 @@ import { AddExpenses } from './AddExpenses.js';
 
 export default function App() {
   const [user, setUser] = useState({})
+
+  //To fit the user
   const findUser = async () => {
     const result = await AsyncStorage.getItem('user')
     console.log(result);
@@ -19,10 +21,12 @@ export default function App() {
 
   }
   useEffect(() => {
-    //findUser()
     AsyncStorage.clear();
+    findUser()
+   
   }, [])
 
+  //if there is no user reder the intro screen,otherwise render AddExpense
   if (!user.username) return <Intro onFinish ={findUser}/>;
   return   <AddExpenses user={user} />
 
