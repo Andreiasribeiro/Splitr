@@ -1,67 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, StatusBar, Dimensions, TextInput, TouchableOpacity, Image } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import Intro from './Intro.js';
 
-export function AddExpenses({ user }) {
-    const [greet, setGreet] = useState('');
-    const [expense, setExpense] = useState('');
-    const [token, setToken] = useState("");
 
-    const [amount, setAmount] = useState(0);
+
+export default function AddExpenses() {
+
     const [description, setDescription] = useState('');
+    const [amount, setAmount] = useState(0);
     const [trip, setTrip] = useState('');
+    const [expense, setExpense] = useState('');
 
-    // data to be sent to the POST request
-    //const data = {
-    // tripID: tripID,
-    // amount: amount,
-    //  description: description,
-    // }
-
-    const findGreet = () => {
-        const hours = new Date().getHours()
-        if (hours === 0 || hours < 12) return setGreet('Morning,');
-        if (hours === 1 || hours < 17) return setGreet('Afternoon,');
-        setGreet('Evening,');
-    }
-    // to call findGreet
-    useEffect(() => {
-        //AsyncStorage.clear();
-        findGreet();
-    }, []);
-
-
-    //const myHeaders = new Headers();
-
-    //myHeaders.append('Content-Type', 'application/json');
-    //myHeaders.append('Authorization', token);
-
-    //return fetch('http://localhost:8080/' + trip + '/expense', {
-     //   method: 'POST',
-     //   headers: myHeaders,
-    //}).then((response) => response.text())
-    ///.then((text) => {
-    //    console.log(text);
-   //     setLogin(text);
-  //  }).catch((error) => {
-
-     //   console.log(error);
-    //    setExpense("error")
-    //});
 
     function AddExpense() {
         console.log("Calling API Expense");
-
         fetch('http://localhost:8080/' + trip + '/expense', {
             method: "POST",
             body: JSON.stringify(data),
-            headers: { "Content-type": "application/json" }
+            headers: { "Content-type": "application/json", "Authorization": token }
         })
-            .then((response) => response.text())
+            .then((response) => response.JSON())
             .then((text) => {
                 console.log(text);
-                setLogin(text);
+                setExpense(text);
             }).catch((error) => {
 
                 console.log(error);
@@ -71,29 +31,36 @@ export function AddExpenses({ user }) {
 
     return (
         <>
-            <StatusBar barStyle='dark-content' backgroundColor='#fff'></StatusBar>
+
             <View style={styles.container}>
-                <Text style={styles.header}>{`Good ${greet} ${user.username}! \n  Add your expenses`}</Text>
+
                 <Image
                     source={require("./assets/SplitrLogo.png")}
                     style={{ width: 200, height: 200, marginTop: 64 }}
                     resizeModo="contain"
                 />
-                <TextInput
-                    placeholder='Enter the tripID'
-                    style={styles.textInput} />
 
                 <TextInput
-                    placeholder='Enter the expense'
-                    style={styles.textInput} />
+                    placeholder='Enter the tripID'
+                    style={styles.textInput}
+                    onChangeText={setTrip} />
+
+                <TextInput
+                    placeholder='Enter the description'
+                    style={styles.textInput}
+                    onChangeText={setDescription} />
+
 
                 <TextInput
                     placeholder='Enter the amount'
-                    style={styles.textInput} />
+                    style={styles.textInput}
+                    onChangeText={setAmount} />
+
+
 
                 <TouchableOpacity
-                    value={expense}
-                    onChangeText={setExpense}
+
+                    onPress={AddExpense}
                     style={styles.loginButton}
                 >
                     <Text style={styles.textButton}>
@@ -101,13 +68,7 @@ export function AddExpenses({ user }) {
                         </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.loginButton}
-                >
-                    <Text style={styles.textButton}>
-                        Expense list
-                        </Text>
-                </TouchableOpacity>
+
                 <Text>  Expense list here</Text>
 
             </View>

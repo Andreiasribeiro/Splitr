@@ -1,34 +1,15 @@
 //to display the intro for the app
-import AsyncStorage from '@react-native-community/async-storage';
-import React, { useState, setUser } from 'react';
+
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, Image, TextInput, StatusBar, Dimensions, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback } from 'react-native';
-import { RoundIconBtn } from './RoundIconBtn.js';
-import { AddExpenses } from './AddExpenses.js';
 
 
-
-export default function Intro({ onFinish }) {
+export default function Intro() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [token, setToken] = useState("");
-
     const [login, setLogin] = useState("Your login here");
-    
 
-    // const handleOnChangeText = text => {
-    //   setUsername(text);
-    //}
-
-    //To store the user
-    // After save the user, check if there are onFinish function
-    const handleSubmit = async () => {
-        const user = { username: username, token: login};
-        //JSON.stringify to change the value to string, because AsyncStorage olny accept string
-        await AsyncStorage.setItem('user', JSON.stringify(user));
-        if (onFinish) onFinish();
-
-    };
 
     function apiCall() {
 
@@ -41,18 +22,17 @@ export default function Intro({ onFinish }) {
                 .then((text) => {
                     if (text == !username && !password) {
                         alert("username or password invalid")
+
                     } else {
                         console.log(text);
                         setLogin(text);
-                       
+
                     }
                 })
         }
 
     }
-
-   //Press the button "Authentication" and then "Submit" to sent the token
-
+    //Press the button "Authentication" and then "Submit" to sent the token
     return (
         <>
             <StatusBar hidden />
@@ -83,32 +63,11 @@ export default function Intro({ onFinish }) {
                     style={styles.loginButton}
                 >
                     <Text style={styles.textButton}>
-                        Authentication
+                        Submit
                         </Text>
                 </TouchableOpacity>) : null}
 
-                <TouchableOpacity
-                    onPress={handleSubmit}
-                    style={styles.loginButton}
-                >
-                    <Text style={styles.textButton}>
-                        Submit
-                        </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => {
-                        apiCall();
-                    }}
-                    onPressIn={() => {
-                        handleSubmit();
-                    }}
-                    style={styles.loginButton}
-                >
-                    <Text style={styles.textButton}>
-                        Mult Click
-                        </Text>
-                </TouchableOpacity>
+                
 
 
             </View>
