@@ -22,7 +22,8 @@ export default function AddExpenses() {
             .then((response) => response.json())
             .then((json) => {
                 console.log(json);
-                setExpense(json);
+                setExpense(json.trip.amount);
+                setExpense(json.trip.description);
             }).catch((error) => {
 
                 console.log(error);
