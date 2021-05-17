@@ -19,10 +19,10 @@ export default function AddExpenses() {
             body: JSON.stringify(data.description),
             headers: { "Content-type": "application/json", "Authorization": token }
         })
-            .then((response) => response.JSON())
-            .then((text) => {
-                console.log(text);
-                setExpense(text);
+            .then((response) => response.json())
+            .then((json) => {
+                console.log(json);
+                setExpense(json);
             }).catch((error) => {
 
                 console.log(error);
@@ -70,7 +70,7 @@ export default function AddExpenses() {
                 </TouchableOpacity>
 
 
-                <Text>  Expense list here</Text>
+                <Text> {expense} </Text>
 
             </View>
         </>
