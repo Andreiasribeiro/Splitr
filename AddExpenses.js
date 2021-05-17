@@ -15,7 +15,8 @@ export default function AddExpenses() {
         console.log("Calling API Expense");
         fetch('http://localhost:8080/' + trip + '/expense', {
             method: "POST",
-            body: JSON.stringify(data),
+            body: JSON.stringify(data.amount),
+            body: JSON.stringify(data.description),
             headers: { "Content-type": "application/json", "Authorization": token }
         })
             .then((response) => response.JSON())
