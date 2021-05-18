@@ -3,36 +3,44 @@ import { View, StyleSheet, Text, StatusBar, Dimensions, TextInput, TouchableOpac
 
 
 
-export default function AddExpenses() {
+export default function ScreenAddExpense ({navigation}) {
 
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState(0);
     const [trip, setTrip] = useState('');
     const [expense, setExpense] = useState('');
 
+    
+    <Text src ="" id = "myList"/> 
+
     //const database =[];
     //const data = {};
-
+  
     function AddExpense() {
         console.log("Calling API Expense");
         fetch('http://localhost:8080/' + trip + '/expense', {
             method: "POST",
-            body: JSON.stringify(data),
+            body: JSON.stringify({ 
+                "tripId": trip,
+                "amount": amount , 
+                "description": description,
+               }),
             headers: {
                 "Content-type": "application/json",
-                "Authorization": token
+                "Authorization": token,
             }
         })
             .then((response) => response.json())
             .then((json) => {
                 console.log(json);
-                setExpense(json.trip.amount);
-                setExpense(json.trip.description);
+                setExpense(json);
+                document.getElementById('myList').src = URL.createObjectURL(json);
+
             }).catch((error) => {
 
                 console.log(error);
                 setExpense("error")
-               
+                
             });
     }
 
@@ -76,7 +84,7 @@ export default function AddExpenses() {
                 </TouchableOpacity>
 
 
-                <Text> {expense} </Text>
+                <Text> Expense here {expense} </Text>
 
             </View>
         </>
@@ -87,6 +95,8 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
+        flex: 1,
+        backgroundColor: '#fff',
     },
     header: {
         fontSize: 20,

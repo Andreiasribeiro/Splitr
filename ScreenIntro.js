@@ -1,4 +1,3 @@
-//to display the intro for the app
 
 import React, { useState } from 'react';
 import { View, StyleSheet, Button, Text, Image, TextInput, 
@@ -7,7 +6,7 @@ import { View, StyleSheet, Button, Text, Image, TextInput,
 
 
 
-export default function Intro() {
+export default function ScreenIntro({navigation}) {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -19,23 +18,27 @@ export default function Intro() {
 
         console.log("Calling API");
         if (username && password) {
+        
             fetch('http://localhost:8080/login?username=' + username + '&password=' + password)
 
                 .then((response) => response.text())// convert to text
                 .then((text) => {
                     if (text == !username && !password) {
                         alert("username or password invalid")
+                        
 
                     } else {
+                        navigation.push("AddExpense");
                         console.log(text);
                         setLogin(text);
+                        
 
                     }
                 })
         }
 
     }
-    //Press the button "Authentication" and then "Submit" to sent the token
+  
     return (
         <>
             <StatusBar hidden />
