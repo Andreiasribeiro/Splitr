@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import ScreenIntro from './ScreenIntro';
 import ScreenAddExpense from './ScreenAddExpense';
 import ScreenListExpenses from './ScreenListExpenses';
+import ScreenNewExpenses from './ScreenNewExpenses';
 
 
 const navigator = createStackNavigator(
@@ -12,6 +13,7 @@ const navigator = createStackNavigator(
   Intro: ScreenIntro,
   AddExpense: ScreenAddExpense,
   ListExpenses: ScreenListExpenses,
+  NewExpenses: ScreenNewExpenses,
   },
   {
   initialRouteName: 'Intro',

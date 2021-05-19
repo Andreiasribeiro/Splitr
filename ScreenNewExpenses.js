@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, StatusBar, Dimensions, TextInput, TouchableOpacity, Image, Flaylist } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-
 import React from 'react';
-import { Text } from 'react-native';
+import { View, StyleSheet, Text, StatusBar, Dimensions, TextInput, TouchableOpacity, Image, Flaylist } from 'react-native';
+
+
+
 export default function ScreenNewExpenses({ navigation }) {
 
 
@@ -22,7 +21,7 @@ export default function ScreenNewExpenses({ navigation }) {
                 <TouchableOpacity
 
                     onPress={() => {
-                        navigation.navigate('NewExpenses')
+                        navigation.navigate('AddExpense')
                     }}
 
                     style={styles.loginButton}
@@ -32,12 +31,8 @@ export default function ScreenNewExpenses({ navigation }) {
                         </Text>
                 </TouchableOpacity>
 
-                <FlatList //id="result"
-                ></FlatList>
-
-                <Text
-                > Expense here
-                     {expense} </Text>
+              
+               
 
             </View>
         </>

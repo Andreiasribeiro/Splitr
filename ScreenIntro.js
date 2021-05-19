@@ -31,7 +31,7 @@ export default function ScreenIntro({navigation}) {
                         
                         console.log(text);
                         setLogin(text);
-                        navigation.push("AddExpense");
+                        navigation.push("NewExpenses");
                         
 
                     }
