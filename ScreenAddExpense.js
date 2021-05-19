@@ -1,46 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, StatusBar, Dimensions, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, StyleSheet, Text, StatusBar, Dimensions, TextInput, TouchableOpacity, Image, Flaylist} from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 
 
 
-export default function ScreenAddExpense ({navigation}) {
+export default function ScreenAddExpense({ navigation }) {
 
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState(0);
     const [trip, setTrip] = useState('');
     const [expense, setExpense] = useState('');
-
-    
-    <Text src ="" id = "myList"/> 
-
-    //const database =[];
-    //const data = {};
-  
+ 
+ 
     function AddExpense() {
         console.log("Calling API Expense");
         fetch('http://localhost:8080/' + trip + '/expense', {
             method: "POST",
-            body: JSON.stringify({ 
-                "tripId": trip,
-                "amount": amount , 
-                "description": description,
-               }),
+            body: JSON.stringify({
+                tripId: trip,
+                amount: amount,
+                description: description,
+            }),
             headers: {
-                "Content-type": "application/json",
-                "Authorization": token,
+                "Content-type": "application/json ; charset=UTF-8",
+                "Authorization": "Bearer" + login,
             }
         })
             .then((response) => response.json())
             .then((json) => {
                 console.log(json);
                 setExpense(json);
-                document.getElementById('myList').src = URL.createObjectURL(json);
+               
 
             }).catch((error) => {
-
                 console.log(error);
+                console.error(error)
                 setExpense("error")
-                
+
             });
     }
 
@@ -55,18 +51,22 @@ export default function ScreenAddExpense ({navigation}) {
                     resizeModo="contain"
                 />
 
+
                 <TextInput
+
                     placeholder='Enter the tripID'
                     style={styles.textInput}
                     onChangeText={setTrip} />
 
                 <TextInput
+                    //id="descriptions"
                     placeholder='Enter the description'
                     style={styles.textInput}
                     onChangeText={setDescription} />
 
 
                 <TextInput
+                    // id="amouts"
                     placeholder='Enter the amount'
                     style={styles.textInput}
                     onChangeText={setAmount} />
@@ -83,8 +83,11 @@ export default function ScreenAddExpense ({navigation}) {
                         </Text>
                 </TouchableOpacity>
 
+                <FlatList //id="result"
+                ></FlatList>
 
-                <Text> Expense here {expense} </Text>
+
+                
 
             </View>
         </>

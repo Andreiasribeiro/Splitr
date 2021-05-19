@@ -28,9 +28,10 @@ export default function ScreenIntro({navigation}) {
                         
 
                     } else {
-                        navigation.push("AddExpense");
+                        
                         console.log(text);
                         setLogin(text);
+                        navigation.push("AddExpense");
                         
 
                     }
