@@ -1,45 +1,49 @@
 
 import React, { useState } from 'react';
-import { View, StyleSheet, Button, Text, Image, TextInput, 
-    StatusBar, Dimensions, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback } from 'react-native';
+import {
+    View, StyleSheet, Button, Text, Image, TextInput,
+    StatusBar, Dimensions, TouchableOpacity, TouchableHighlight, TouchableWithoutFeedback
+} from 'react-native';
+//import { TOKEN } from "@env";
+//import { token } from 'react-native-dotenv';
 
 
+export default function ScreenIntro({ navigation }) {
 
-
-export default function ScreenIntro({navigation}) {
-
+    //variables to store username, password and login
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [login, setLogin] = useState("Your login here");
+    
 
+  //Fetch function to request from the endpoint in the API-Login
+    function loginCall() {
 
-    function apiCall() {
-
-
-        console.log("Calling API");
+ //To check if the username and password are correct. If not alert an error message
+        console.log("Calling Login API");
         if (username && password) {
-        
+
             fetch('http://localhost:8080/login?username=' + username + '&password=' + password)
 
                 .then((response) => response.text())// convert to text
                 .then((text) => {
-                    if (text == !username && !password) {
+                    if (text == !username || !password) {
                         alert("username or password invalid")
-                        
 
                     } else {
-                        
+
                         console.log(text);
                         setLogin(text);
                         navigation.push("NewExpenses");
-                        
 
                     }
                 })
         }
 
     }
-  
+    //return an image, two input field for username and password
+//One submit button, which appears only with more than 3 characters on 
+//the password input and call the fetch function 
     return (
         <>
             <StatusBar hidden />
@@ -66,19 +70,20 @@ export default function ScreenIntro({navigation}) {
 
 
                 {password.trim().length > 3 ? (<TouchableOpacity
-                    onPress={apiCall}
+                    onPress={loginCall}
                     style={styles.loginButton}
                 >
                     <Text style={styles.textButton}>
                         Submit
                         </Text>
                 </TouchableOpacity>) : null}
-          
+
             </View>
         </>
     );
 }
 //imported dimentions from reatc-native
+//Set styles
 const width = Dimensions.get('window').width - 50;
 const styles = StyleSheet.create({
     container: {

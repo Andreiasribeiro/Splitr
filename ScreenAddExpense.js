@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text, StatusBar, Dimensions, TextInput, TouchableOpacity, Image, Flaylist} from 'react-native';
+import { View, StyleSheet, Text, StatusBar, Dimensions, TextInput, TouchableOpacity, Image, Flaylist } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-
+//import { TOKEN } from "@env";
+//import { login } from './ScreenIntro';
 
 
 export default function ScreenAddExpense({ navigation }) {
 
+    //variables to store description, amount, trip name and expenses
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState(0);
     const [trip, setTrip] = useState('');
     const [expense, setExpense] = useState('');
- 
- 
+
+
+    //Fetch function to request from the endpoint in the API - Add expense
     function AddExpense() {
         console.log("Calling API Expense");
         fetch('http://localhost:8080/' + trip + '/expense', {
@@ -24,13 +27,14 @@ export default function ScreenAddExpense({ navigation }) {
             headers: {
                 "Content-type": "application/json ; charset=UTF-8",
                 "Authorization": "Bearer" + login,
+                //"Authorization": `Bearer ${TOKEN}`
             }
         })
             .then((response) => response.json())
             .then((json) => {
                 console.log(json);
                 setExpense(json);
-               
+
 
             }).catch((error) => {
                 console.log(error);
@@ -39,12 +43,14 @@ export default function ScreenAddExpense({ navigation }) {
 
             });
     }
-
+    //return an image, trhee input field for tripID, description and amount
+    //One button to call the fetch function - AddExpense
+    //Another button to navigate to ScreenListExpenses
     return (
         <>
 
             <View style={styles.container}>
-
+            <Text>ScreenAddExpenses</Text>
                 <Image
                     source={require("./assets/SplitrLogo.png")}
                     style={{ width: 200, height: 200, marginTop: 64 }}
@@ -59,14 +65,14 @@ export default function ScreenAddExpense({ navigation }) {
                     onChangeText={setTrip} />
 
                 <TextInput
-                    //id="descriptions"
+
                     placeholder='Enter the description'
                     style={styles.textInput}
                     onChangeText={setDescription} />
 
 
                 <TextInput
-                    // id="amouts"
+
                     placeholder='Enter the amount'
                     style={styles.textInput}
                     onChangeText={setAmount} />
@@ -83,16 +89,36 @@ export default function ScreenAddExpense({ navigation }) {
                         </Text>
                 </TouchableOpacity>
 
-                <FlatList //id="result"
-                ></FlatList>
+                <TouchableOpacity
 
+                    onPress={() => {
+                        navigation.navigate('ListExpenses')
 
-                
+                    }}
+
+                    style={styles.loginButton}
+                >
+                    <Text style={styles.textButton}>
+                        See Expenses
+                        </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate('Intro')
+                    }}
+                    style={styles.loginButton}
+                >
+                    <Text style={styles.textButton}>
+                        Login another user
+                        </Text>
+                </TouchableOpacity>
 
             </View>
         </>
     )
 };
+//imported dimentions from reatc-native
+//Set styles
 const width = Dimensions.get('window').width - 50;
 const styles = StyleSheet.create({
     container: {

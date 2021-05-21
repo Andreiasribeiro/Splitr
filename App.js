@@ -6,24 +6,30 @@ import ScreenIntro from './ScreenIntro';
 import ScreenAddExpense from './ScreenAddExpense';
 import ScreenListExpenses from './ScreenListExpenses';
 import ScreenNewExpenses from './ScreenNewExpenses';
+import ScreenCloseTrip from './ScreenCloseTrip';
+import ScreenSummary from './ScreenSummary';
 
 
 const navigator = createStackNavigator(
   {
-  Intro: ScreenIntro,
-  AddExpense: ScreenAddExpense,
-  ListExpenses: ScreenListExpenses,
-  NewExpenses: ScreenNewExpenses,
+    //list of all screens
+    Intro: ScreenIntro,
+    AddExpense: ScreenAddExpense,
+    ListExpenses: ScreenListExpenses,
+    NewExpenses: ScreenNewExpenses,
+    CloseTrip: ScreenCloseTrip,
+    GetSummary: ScreenSummary,
   },
   {
-  initialRouteName: 'Intro',
-  defaultNavigationOptions: {
-  title: 'Splitr App',
-  },
+    initialRouteName: 'Intro',
+    defaultNavigationOptions: {
+      title: 'Splitr App',
+    },
   }
-  );
-  export default createAppContainer(navigator);
-
+);
+//To call the functio to navigate
+export default createAppContainer(navigator);
+//Set styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,17 +1,17 @@
-import React, {useState} from 'react';
-import { View, StyleSheet, Text, StatusBar, Dimensions, TextInput, TouchableOpacity, Image } from 'react-native';
-
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, StatusBar, Dimensions, TextInput, TouchableOpacity, Image, FlatList } from 'react-native';
+//import { TOKEN } from "@env";
 
 export default function ScreenListExpenses({ navigation }) {
 
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState(0);
     const [trip, setTrip] = useState('');
-    const [expense, setExpense] = useState('');
     const [list, setList] = useState('');
 
 
-    function ListExpense() {
+    //Fetch function to request from the endpoint in the API - List expenses
+    function ListExpenses() {
         console.log("Calling API Expense");
         fetch('http://localhost:8080/' + trip, {
             method: "GET",
@@ -19,12 +19,8 @@ export default function ScreenListExpenses({ navigation }) {
                 tripId: trip,
                 amount: amount,
                 description: description,
-                usernama: username,
             }),
-            headers: {
-                "Content-type": "application/json",
-                "Authorization": token,
-            }
+
         })
             .then((response) => response.json())
             .then((json) => {
@@ -33,32 +29,116 @@ export default function ScreenListExpenses({ navigation }) {
 
 
             }).catch((error) => {
-
                 console.log(error);
+                console.error(error)
                 setList("error")
 
             });
 
-        const table = json.split('\n').slice(1);
-        rows.forEach(row => {
-            const columns = row.split(',');
-            const trip = row[0];
-            const description = columns[1];
-            const amount = columns[2];
-            const username = columns[3];
-            console.log(trip, description, amount, username);
+        //  const table = json.split('\n').slice(1);
+        // rows.forEach(row => {
+        //   const columns = row.split(',');
+        //  const trip = row[0];
+        //   const description = columns[1];
+        //  const amount = columns[2];
+        //   const username = columns[3];
+        //  console.log(trip, description, amount, username);
 
-        })
+        //  })
     }
-
+    //return an image and one button to list all expenses
     return (
+        <>
 
-        <Text>Hello, I am your component two!</Text>
+            <View style={styles.container}>
+<Text>ScreenListExpenses</Text>
+                <Image
+                    source={require("./assets/SplitrLogo.png")}
+                    style={{ width: 200, height: 200, marginTop: 64 }}
+                    resizeModo="contain"
+                />
 
-    );
+
+                <TouchableOpacity
+
+                    onPress={ListExpenses}
+
+                    style={styles.loginButton}
+                >
+                    <Text style={styles.textButton}>
+                        See Expenses
+                        </Text>
+                </TouchableOpacity>
 
 
-}
+                
+                <TouchableOpacity
+
+                    onPress={() => {
+                        navigation.navigate('GetSummary')
+
+                    }}
+
+                    style={styles.loginButton}
+                >
+                    <Text style={styles.textButton}>
+                        Get the Summary
+                        </Text>
+                </TouchableOpacity>
+
+                
+                <TouchableOpacity
+
+                    onPress={() => {
+                        navigation.navigate('AddExpense')
+
+                    }}
+
+                    style={styles.loginButton}
+                >
+                    <Text style={styles.textButton}>
+                        Add Expenses
+                        </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+
+                    onPress={() => {
+                        navigation.navigate('CloseTrip')
+
+                    }}
+
+                    style={styles.loginButton}
+                >
+                    <Text style={styles.textButton}>
+                        Close Trip
+                        </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate('Intro')
+                    }}
+                    style={styles.loginButton}
+                >
+                    <Text style={styles.textButton}>
+                        Login another user
+                        </Text>
+                </TouchableOpacity>
+
+
+                <FlatList
+                > {list}</FlatList>
+
+
+
+
+            </View>
+        </>
+    )
+};
+//imported dimentions from reatc-native
+//Set styles
 const width = Dimensions.get('window').width - 50;
 const styles = StyleSheet.create({
     container: {
@@ -119,4 +199,3 @@ const styles = StyleSheet.create({
     }
 
 });
-
